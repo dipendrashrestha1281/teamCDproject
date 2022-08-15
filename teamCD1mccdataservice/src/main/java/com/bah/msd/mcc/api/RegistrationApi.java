@@ -1,16 +1,55 @@
 package com.bah.msd.mcc.api;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+import java.net.URI;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import com.bah.msd.mcc.domain.Registration;
+import com.bah.msd.mcc.repository.RegistrationRepository;
 
 @RestController
 @RequestMapping("/registrations")
 public class RegistrationApi {
+	
+	@Autowired
+	RegistrationRepository repo;
+	
+	public Iterable<Registration> getAll() {
+		return repo.findAll();
+	}
+	
+	@GetMapping("/{registrationId")
+	public Optional<Registration> getRegistrationById(@PathVariable("registrationId") long id) {
+		return repo.findById(id);
+	}
+	
+	@PostMapping
+	public ResponseEntity<?> addRegistration(@RequestBody Registration newRegistration, UriComponentsBuilder uri) {
+		if (newRegistration.getId() != 0 
+			|| newRegistration.getEvent_id() == null
+			|| newRegistration.getCustomer_id() == null
+			|| newRegistration.getRegistration_date() == null) {
+			
+			return ResponseEntity.badRequest().build();
+			
+		}
+		newRegistration = repo.save(newRegistration);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(newRegistration.getId()).toUri();
+		ResponseEntity<?> response = ResponseEntity.created(location).build();
+		return response;
+	}
+	
+	
 
 	// Dummy Data
 //	ArrayList<Registration> registrationList = new ArrayList<Registration>();
