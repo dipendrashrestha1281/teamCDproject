@@ -99,7 +99,7 @@ public class CustomerApi {
 	@DeleteMapping("/{customerId}")
 	public ResponseEntity<?> deleteCustomerById(@PathVariable("customerId") long id) {
 		repo.deleteById(id);
-		return null;
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 }
