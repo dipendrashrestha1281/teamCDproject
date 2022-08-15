@@ -73,6 +73,7 @@ public class EventApi {
 	public ResponseEntity<?> deleteEventById(@PathVariable ("eventId") long id) {
 		repo.deleteById(id);
 		return null;
+		//return
 	}
 
 /*	
