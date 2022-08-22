@@ -1,6 +1,6 @@
 node {
     stage ("Checkout DataService"){
-        git branch: 'main', url: ' https://github.com/foxwas/bahmsdfox-msdataservice.git'
+        git branch: 'main', url: 'https://github.com/dipendrashrestha1281/teamCDproject.git'
     }
     
     stage ("Gradle Build - DataService") {
