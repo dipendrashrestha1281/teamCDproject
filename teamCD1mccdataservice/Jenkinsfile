@@ -7,10 +7,6 @@ node {
         sh 'gradle -b teamCDmccdataservice/build.gradle clean build'
     }
     
-    stage ("Gradle Bootjar-Package - DataService") {
-        sh 'gradle -b teamCDmccdataservice/build.gradle bootjar'
-    }
-    
     stage('User Acceptance Test - DataService') {
 	
 	  def response= input message: 'Is this build good to go?',
