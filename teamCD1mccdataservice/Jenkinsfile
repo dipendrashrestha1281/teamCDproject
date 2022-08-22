@@ -4,7 +4,7 @@ node {
     }
     
     stage ("Gradle Build - DataService") {
-        sh 'gradle -b teamCDmccdataservice/build.gradle clean build'
+        sh 'gradle -b teamCD1mccdataservice/build.gradle clean build'
     }
     
     stage('User Acceptance Test - DataService') {
@@ -15,7 +15,7 @@ node {
 	
 	  if(response=="Yes") {
 	    stage('Release - DataService') {
-	      sh 'gradle -b teamCDmccdataservice/build.gradle -x test'
+	      sh 'gradle -b teamCD1mccdataservice/build.gradle -x test'
 	      sh 'echo Release this version'
 	    }
 	  }
