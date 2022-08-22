@@ -17,7 +17,7 @@ node {
 	   parameters: [choice(choices: 'Yes\nNo', 
 	   description: '', name: 'Pass')]
 	
-	  if(response==("Yes") {
+	  if(response=="Yes") {
 	    stage('Release - DataService') {
 	      sh 'gradle -b teamCDmccdataservice/build.gradle -x test'
 	      sh 'echo Release this version'
